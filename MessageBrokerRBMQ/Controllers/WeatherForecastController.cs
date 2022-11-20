@@ -1,3 +1,5 @@
+
+using MessageBrokerRBMQ.Attributes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MessageBrokerRBMQ.Controllers;
@@ -19,6 +21,7 @@ public class WeatherForecastController : ControllerBase
     }
 
     [HttpGet(Name = "GetWeatherForecast")]
+    [Cache(1000)]
     public IEnumerable<WeatherForecast> Get()
     {
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast

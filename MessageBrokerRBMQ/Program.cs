@@ -1,4 +1,3 @@
-using MessageBrokerRBMQ.Models;
 using MessageBrokerRBMQ.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,9 +9,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
-
 //Add Service to using in Controller
+builder.Services.AddScoped<IRedisCache, RedisCache>();
 builder.Services.AddScoped<IMesProducer, MesProducer>();
 builder.Services.AddScoped<IMesConsumer, MesConsumer>();
 

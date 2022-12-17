@@ -15,6 +15,8 @@ builder.Services.AddSwaggerGen();
 //Add Service to using in Controller
 builder.Services.AddScoped<IMesProducer, MesProducer>();
 builder.Services.AddScoped<IMesConsumer, MesConsumer>();
+builder.Services.AddScoped<IPub, Pub>();
+builder.Services.AddScoped<ISub, Sub>();
 
 var app = builder.Build();
 

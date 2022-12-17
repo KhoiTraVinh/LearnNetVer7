@@ -20,13 +20,20 @@ public class MesController : ControllerBase
     private readonly IMesConsumer _mesConsumer;
 
 
+    private readonly IPub _pub;
+
+    private readonly ISub _sub;
+
+
     private static readonly List<Mes> _mes = new();
 
-    public MesController(ILogger<MesController> logger, IMesProducer mesProducer, IMesConsumer mesConsumer)
+    public MesController(ILogger<MesController> logger, IMesProducer mesProducer, IMesConsumer mesConsumer, IPub pub, ISub sub)
     {
         _logger = logger;
         _mesProducer = mesProducer;
         _mesConsumer = mesConsumer;
+        _pub = pub;
+        _sub = sub;
     }
 
     [HttpPost]
@@ -35,9 +42,12 @@ public class MesController : ControllerBase
 
         _mes.Add(message);
 
-        _mesProducer.SendingMes<Mes>(message);
 
-        _mesConsumer.Recive<Mes>();
+        _pub.Send<Mes>(message);
+        _sub.Recive<Mes>();
+        // _mesProducer.SendingMes<Mes>(message);
+
+        // _mesConsumer.Recive<Mes>();
 
         return Ok();
     }
